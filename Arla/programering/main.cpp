@@ -6,8 +6,8 @@ using namespace ur_rtde;
 using namespace std::chrono;
 
 
-RTDEControlInterface rtde_control("127.0.0.1");
-RTDEReceiveInterface rtde_receive("127.0.0.1");
+RTDEControlInterface rtde_control("192.168.1.112");
+RTDEReceiveInterface rtde_receive("192.168.1.112");
 
 void newTCPOffset (double x, double y, double z)
 {   
@@ -60,7 +60,7 @@ while (true)
 {
 
 /////////// GOING TO INITIAL STARTING POSITION ////////////////////
-std::vector<double> joint_q_1 = {-0.000068, -109.030956, -138.951581, 67.982569, 90.000100, 0.000032};
+std::vector<double> joint_q_1 = {0, -109.030956, -138.951581, 67.982569, 90.000100, 0};
 
 for (size_t i = 0; i < 6; i++)
 {
@@ -83,13 +83,16 @@ if (input == 1)
 
 //// BUR 1 ////
 
-rtde_control.moveJ(joint_q_1, 0.25, 0.25, false);
+//rtde_control.moveJ(joint_q_1, 0.25, 0.25, false);
 
-newTCPOffset(0, 0.36, 0);
+//newTCPOffset(0, 0.36, 0);
+
+
+
 
 std::vector<double> home1 = rtde_receive.getActualTCPPose();
 
-newTCPOffset(0.32, 0, 0);
+//newTCPOffset(0.32, 0, 0);
 
 forceModeUp ();
 
@@ -97,30 +100,30 @@ forceModeUp ();
 
 
 
-newTCPOffset(-0.32, 0, 0);
+//newTCPOffset(-0.32, 0, 0);
 
-newTCPOffset(0, 0, -0.03);
+//newTCPOffset(0, 0, -0.03);
 
-newTCPOffset(-0.08, 0, 0);
+//newTCPOffset(-0.08, 0, 0);
 
-std::this_thread::sleep_for(std::chrono::milliseconds(4000)); ////SLEEP TO GIVE BOX TIME TO MOVE ON CONVAYOR BELT
+//std::this_thread::sleep_for(std::chrono::milliseconds(4000)); ////SLEEP TO GIVE BOX TIME TO MOVE ON CONVAYOR BELT
 
-rtde_control.moveL(home1, 0.15, 0.5, false);
+//rtde_control.moveL(home1, 0.15, 0.5, false);
 
-newTCPOffset(0.64, 0, 0);
+//newTCPOffset(0.64, 0, 0);
 
 //newTCPOffset(-0.05, 0, 0.05);
 
-forceModeUp ();
+//forceModeUp ();
 
-newTCPOffset(-0.64, 0, 0);
+//newTCPOffset(-0.64, 0, 0);
 
-newTCPOffset(0, 0, -0.03);
+//(0, 0, -0.03);
 
-newTCPOffset(-0.08, 0, 0);
+//newTCPOffset(-0.08, 0, 0);
 
 
-std::this_thread::sleep_for(std::chrono::milliseconds(4000)); ////SLEEP TO GIVE BOX TIME TO MOVE ON CONVAYOR BELT
+//std::this_thread::sleep_for(std::chrono::milliseconds(4000)); ////SLEEP TO GIVE BOX TIME TO MOVE ON CONVAYOR BELT
 
 
 }

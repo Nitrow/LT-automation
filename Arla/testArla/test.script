@@ -1,0 +1,482 @@
+def test():
+  set_gravity([0.0, 0.0, 9.82])
+  set_safety_mode_transition_hardness(1)
+  set_target_payload(1.500000, [0.000000, 0.000000, 0.000000], [0.003026, 0.003026, 0.003026, 0.000000, 0.000000, 0.000000])
+  step_count_9146dc80_e045_452d_9089_afe726198c07 = 0.0
+  thread Step_Counter_Thread_b37809f7_04b2_4541_9445_56a3c9030122():
+    while (True):
+      step_count_9146dc80_e045_452d_9089_afe726198c07 = step_count_9146dc80_e045_452d_9089_afe726198c07 + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_b37809f7_04b2_4541_9445_56a3c9030122()
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+  global timer_1=0
+  global timer_2=0
+  global StartPose_p=p[-.360060985158, -.449099574275, .267738131395, -.000000000322, 3.141592638689, .000000012136]
+  global StartPose_q=[-1.9392353318908988, -1.6180947495239426, -2.3195425759004635, -0.7747516549602826, 1.570796305669936, -0.36843900509600314]
+  global StartCage1_p=p[-.377018104893, -.542594330944, .233918121417, -.164742166258, -3.137215116455, .000254417202]
+  global StartCage1_q=[-1.9131034056292933, -1.798835893670553, -2.1877503395080566, -0.7261393827250977, 1.567793607711792, -0.2358916441546839]
+  global Pregrasp1_p=p[-.377023079686, -.645690550758, .233924917795, .147175246258, 3.138126188637, -.000385834443]
+  global Pregrasp1_q=[-1.8658660093890589, -1.9149991474547328, -2.0199456214904785, -0.7777179044536133, 1.5674598217010498, -0.19996720949281865]
+  def calculate_point_to_move_towards(feature, direction, position_distance):
+    local posDir=[direction[0], direction[1], direction[2]]
+    if (norm(posDir) < 1e-6):
+      return get_target_waypoint()
+    end
+    local direction_vector_normalized=normalize(posDir)
+    local displacement_pose=p[direction_vector_normalized[0] * position_distance,direction_vector_normalized[1] * position_distance,direction_vector_normalized[2] * position_distance,0,0,0]
+    local wanted_displacement_in_base_frame=pose_sub(pose_trans(feature, displacement_pose), feature)
+    return pose_add(get_target_waypoint(), wanted_displacement_in_base_frame)
+  end
+  global Waypoint_1_p=p[-.377050256863, -.230689822738, .236965201846, -.147314885692, -3.138132855478, -.000602609904]
+  global Waypoint_1_q=[-2.1874994877747413, -1.4305364924918038, -2.5728938217111637, -0.7092795830534371, 1.5705860828439768, -0.522885036356679]
+  global Waypoint_2_p=p[-.377050256683, -.155462822759, .236965201801, -.147314885742, -3.138132855590, -.000602609218]
+  global Waypoint_2_q=[-2.309262604232295, -1.3521424967613491, -2.6285612802266645, -0.7319782072070371, 1.5705486604208705, -0.6446481502584973]
+  global Pregrasp21_p=p[-.377061032416, -1.056699855273, .233886334595, -.164819110765, -3.137193439886, .000193679497]
+  global Pregrasp21_q=[-1.7582972685443323, -2.433080335656637, -1.1206817626953125, -1.1590045255473633, 1.5655863285064697, -0.08157569566835576]
+  global Pregrasp22_p=p[-.377043421129, -1.056691546771, .263614931021, -.164826440531, -3.137232900005, .000051723102]
+  global Pregrasp22_q=[-1.758284870778219, -2.4122845135130824, -1.1032705307006836, -1.1973069471171875, 1.5655748844146729, -0.08140784898866826]
+  global Waypoint_3_p=p[-.376973098113, -.137770080327, .231648949409, .164683980717, 3.137098959556, .000994753348]
+  global Waypoint_3_q=[-2.3444786707507532, -1.3518012327006836, -2.6444077491760254, -0.717278317814209, 1.568795919418335, -0.666900936757223]
+  global Waypoint_4_p=p[-.376969178027, -.099845336646, .231657319622, .164710133405, 3.137092950077, .000901719601]
+  global Waypoint_4_q=[-2.421850029622213, -1.3226273816875, -2.662646770477295, -0.7281511586955567, 1.5688555240631104, -0.744232479725973]
+  global Waypoint_5_p=p[.377059999968, -1.056699855256, .233886334595, -.164819110501, -3.137193439893, .000193679338]
+  global Waypoint_5_q=[-1.0721885215849642, -2.432368153000673, -1.122020344253512, -1.1579334657542706, 1.5706698849323844, 0.603585528897404]
+  global Waypoint_6_p=p[.377019999982, -.645690550754, .233924917795, .147175245818, 3.138126188677, -.000385834562]
+  global Waypoint_6_q=[-0.8071988504282226, -1.914040274356049, -2.0205507538884033, -0.7776162486585037, 1.570630156291818, 0.8573269509824335]
+  global Waypoint_7_p=p[.377039999973, -1.056691546771, .263614931020, -.164826440542, -3.137232899987, .000051723101]
+  global Waypoint_7_q=[-1.0722093253359803, -2.411605869479824, -1.1045699523337404, -1.196202302909656, 1.570751101954674, 0.6035680712196695]
+  global timer_2_is_counting=False
+  global timer_1_is_counting=False
+  thread Timer_Thread():
+    while (True):
+      if (timer_2_is_counting):
+        timer_2 = timer_2 + get_steptime()
+      end
+      if (timer_1_is_counting):
+        timer_1 = timer_1 + get_steptime()
+      end
+      sync()
+    end
+  end
+  run Timer_Thread()
+  $ 1 "Robot Program"
+  $ 2 "ResetForce"
+  $ 3 "Wait is_steady()"
+  while (not(is_steady())):
+    sync()
+  end
+  $ 4 "Wait: 0.25"
+  sleep(0.25)
+  $ 5 "zero_ftsensor()"
+  zero_ftsensor()
+  $ 6 "Wait: 0.25"
+  sleep(0.25)
+  $ 7 "timer_1: Start"
+  timer_1_is_counting = True
+  $ 8 "MoveJ"
+  $ 9 "StartPose" "breakAfter"
+  movej(get_inverse_kin(StartPose_p, qnear=StartPose_q), a=0.6981317007977318, v=0.5235987755982988)
+  $ 10 "Cage1"
+  $ 11 "MoveL"
+  $ 12 "StartCage1" "breakAfter"
+  movel(StartCage1_p, a=1.2, v=0.25)
+  $ 13 "MoveL"
+  $ 14 "Pregrasp1" "breakAfter"
+  movel(Pregrasp1_p, a=1.2, v=0.25)
+  $ 15 "Force"
+  sleep(0.02)
+  zero_ftsensor()
+  force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [0, 0, 1, 0, 0, 0], [0.0, 10.0, 225.0, 0.0, 0.0, 0.0], 2, [0.1, 0.1, 0.15, 0.3490658503988659, 0.3490658503988659, 0.3490658503988659])
+  $ 16 "Set DO[0]=On" "noBreak"
+  set_standard_digital_out(0, True)
+  $ 17 "Wait: 0.5" "noBreak"
+  sleep(0.5)
+  end_force_mode()
+  stopl(5.0)
+  $ 18 "MoveL"
+  $ 19 "Direction: Base Y+"
+  global move_thread_flag_19=0
+  thread move_thread_19():
+    enter_critical
+    move_thread_flag_19 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,1.0,0.0], 0.1)
+    movel(towardsPos, a=1.2, v=0.1)
+    move_thread_flag_19 = 2
+    exit_critical
+  end
+  move_thread_flag_19 = 0
+  move_thread_han_19 = run move_thread_19()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_19 > 1):
+      join move_thread_han_19
+      $ 20 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 21 "Set DO[0]=Off"
+  set_standard_digital_out(0, False)
+  $ 22 "MoveL"
+  $ 23 "Direction: Base Y+"
+  global move_thread_flag_23=0
+  thread move_thread_23():
+    enter_critical
+    move_thread_flag_23 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,1.0,0.0], 0.315)
+    movel(towardsPos, a=1.2, v=0.25)
+    move_thread_flag_23 = 2
+    exit_critical
+  end
+  move_thread_flag_23 = 0
+  move_thread_han_23 = run move_thread_23()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_23 > 1):
+      join move_thread_han_23
+      $ 24 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 25 "MoveL"
+  $ 26 "Waypoint_1" "breakAfter"
+  movel(Waypoint_1_p, a=1.2, v=0.25)
+  $ 27 "MoveL"
+  $ 28 "Waypoint_2" "breakAfter"
+  movel(Waypoint_2_p, a=1.2, v=0.25)
+  $ 29 "Wait: 2.0"
+  sleep(2.0)
+  $ 30 "MoveL"
+  $ 31 "Pregrasp1" "breakAfter"
+  movel(Pregrasp1_p, a=1.2, v=0.25)
+  $ 32 "MoveL"
+  $ 33 "Direction: Base Z+"
+  global move_thread_flag_33=0
+  thread move_thread_33():
+    enter_critical
+    move_thread_flag_33 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,0.0,1.0], 0.005)
+    movel(towardsPos, a=1.2, v=0.25)
+    move_thread_flag_33 = 2
+    exit_critical
+  end
+  move_thread_flag_33 = 0
+  move_thread_han_33 = run move_thread_33()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_33 > 1):
+      join move_thread_han_33
+      $ 34 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 35 "MoveL"
+  $ 36 "Pregrasp21" "breakAfter"
+  movel(Pregrasp21_p, a=1.2, v=0.25)
+  $ 37 "MoveL"
+  $ 38 "Pregrasp22" "breakAfter"
+  movel(Pregrasp22_p, a=1.2, v=0.3)
+  $ 39 "MoveL"
+  $ 40 "Direction: Base Y+"
+  global move_thread_flag_40=0
+  thread move_thread_40():
+    enter_critical
+    move_thread_flag_40 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,1.0,0.0], 0.405)
+    movel(towardsPos, a=1.2, v=0.25)
+    move_thread_flag_40 = 2
+    exit_critical
+  end
+  move_thread_flag_40 = 0
+  move_thread_han_40 = run move_thread_40()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_40 > 1):
+      join move_thread_han_40
+      $ 41 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 42 "Force"
+  sleep(0.02)
+  zero_ftsensor()
+  force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [0, 0, 1, 0, 0, 0], [0.0, 10.0, 225.0, 0.0, 0.0, 0.0], 2, [0.1, 0.1, 0.15, 0.3490658503988659, 0.3490658503988659, 0.3490658503988659])
+  $ 43 "Set DO[0]=On" "noBreak"
+  set_standard_digital_out(0, True)
+  $ 44 "Wait: 0.7" "noBreak"
+  sleep(0.7)
+  end_force_mode()
+  stopl(5.0)
+  $ 45 "MoveL"
+  $ 46 "Direction: Base Y+"
+  global move_thread_flag_46=0
+  thread move_thread_46():
+    enter_critical
+    move_thread_flag_46 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,1.0,0.0], 0.1)
+    movel(towardsPos, a=1.2, v=0.25)
+    move_thread_flag_46 = 2
+    exit_critical
+  end
+  move_thread_flag_46 = 0
+  move_thread_han_46 = run move_thread_46()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_46 > 1):
+      join move_thread_han_46
+      $ 47 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 48 "Set DO[0]=Off"
+  set_standard_digital_out(0, False)
+  $ 49 "MoveL"
+  $ 50 "Direction: Base Z-"
+  global move_thread_flag_50=0
+  thread move_thread_50():
+    enter_critical
+    move_thread_flag_50 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,0.0,-1.0], 0.01)
+    movel(towardsPos, a=1.2, v=0.25)
+    move_thread_flag_50 = 2
+    exit_critical
+  end
+  move_thread_flag_50 = 0
+  move_thread_han_50 = run move_thread_50()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_50 > 1):
+      join move_thread_han_50
+      $ 51 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 52 "MoveL"
+  $ 53 "Direction: Base Y+"
+  global move_thread_flag_53=0
+  thread move_thread_53():
+    enter_critical
+    move_thread_flag_53 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,1.0,0.0], 0.315)
+    movel(towardsPos, a=1.2, v=0.25)
+    move_thread_flag_53 = 2
+    exit_critical
+  end
+  move_thread_flag_53 = 0
+  move_thread_han_53 = run move_thread_53()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_53 > 1):
+      join move_thread_han_53
+      $ 54 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 55 "Halt"
+  halt
+  $ 56 "MoveL"
+  $ 57 "Waypoint_3" "breakAfter"
+  movel(Waypoint_3_p, a=1.2, v=0.3)
+  $ 58 "Halt"
+  halt
+  $ 59 "MoveL"
+  $ 60 "Waypoint_4" "breakAfter"
+  movel(Waypoint_4_p, a=1.2, v=0.3)
+  $ 61 "Wait: 2.0"
+  sleep(2.0)
+  $ 62 "Cage2"
+  $ 63 "MoveL"
+  $ 64 "Waypoint_5" "breakAfter"
+  movel(Waypoint_5_p, a=1.2, v=0.25)
+  $ 65 "MoveL"
+  $ 66 "Waypoint_6" "breakAfter"
+  movel(Waypoint_6_p, a=1.2, v=0.25)
+  $ 67 "Force"
+  sleep(0.02)
+  zero_ftsensor()
+  force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [0, 0, 1, 0, 0, 0], [0.0, 10.0, 225.0, 0.0, 0.0, 0.0], 2, [0.1, 0.1, 0.15, 0.3490658503988659, 0.3490658503988659, 0.3490658503988659])
+  $ 68 "Set DO[0]=On" "noBreak"
+  set_standard_digital_out(0, True)
+  $ 69 "Wait: 0.5" "noBreak"
+  sleep(0.5)
+  end_force_mode()
+  stopl(5.0)
+  $ 70 "MoveL"
+  $ 71 "Direction: Base Y+"
+  global move_thread_flag_71=0
+  thread move_thread_71():
+    enter_critical
+    move_thread_flag_71 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,1.0,0.0], 0.1)
+    movel(towardsPos, a=1.2, v=0.1)
+    move_thread_flag_71 = 2
+    exit_critical
+  end
+  move_thread_flag_71 = 0
+  move_thread_han_71 = run move_thread_71()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_71 > 1):
+      join move_thread_han_71
+      $ 72 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 73 "Set DO[0]=Off"
+  set_standard_digital_out(0, False)
+  $ 74 "MoveL"
+  $ 75 "Direction: Base Y+"
+  global move_thread_flag_75=0
+  thread move_thread_75():
+    enter_critical
+    move_thread_flag_75 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,1.0,0.0], 0.315)
+    movel(towardsPos, a=1.2, v=0.25)
+    move_thread_flag_75 = 2
+    exit_critical
+  end
+  move_thread_flag_75 = 0
+  move_thread_han_75 = run move_thread_75()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_75 > 1):
+      join move_thread_han_75
+      $ 76 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 77 "Halt"
+  halt
+  $ 78 "MoveL"
+  $ 79 "Waypoint_5" "breakAfter"
+  movel(Waypoint_5_p, a=1.2, v=0.25)
+  $ 80 "MoveL"
+  $ 81 "Waypoint_7" "breakAfter"
+  movel(Waypoint_7_p, a=1.2, v=0.25)
+  $ 82 "MoveL"
+  $ 83 "Direction: Base Y+"
+  global move_thread_flag_83=0
+  thread move_thread_83():
+    enter_critical
+    move_thread_flag_83 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,1.0,0.0], 0.405)
+    movel(towardsPos, a=1.2, v=0.25)
+    move_thread_flag_83 = 2
+    exit_critical
+  end
+  move_thread_flag_83 = 0
+  move_thread_han_83 = run move_thread_83()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_83 > 1):
+      join move_thread_han_83
+      $ 84 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 85 "Force"
+  sleep(0.02)
+  zero_ftsensor()
+  force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [0, 0, 1, 0, 0, 0], [0.0, 10.0, 225.0, 0.0, 0.0, 0.0], 2, [0.1, 0.1, 0.15, 0.3490658503988659, 0.3490658503988659, 0.3490658503988659])
+  $ 86 "Set DO[0]=On" "noBreak"
+  set_standard_digital_out(0, True)
+  $ 87 "Wait: 0.7" "noBreak"
+  sleep(0.7)
+  end_force_mode()
+  stopl(5.0)
+  $ 88 "MoveL"
+  $ 89 "Direction: Base Y+"
+  global move_thread_flag_89=0
+  thread move_thread_89():
+    enter_critical
+    move_thread_flag_89 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,1.0,0.0], 0.1)
+    movel(towardsPos, a=1.2, v=0.25)
+    move_thread_flag_89 = 2
+    exit_critical
+  end
+  move_thread_flag_89 = 0
+  move_thread_han_89 = run move_thread_89()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_89 > 1):
+      join move_thread_han_89
+      $ 90 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 91 "Set DO[0]=Off"
+  set_standard_digital_out(0, False)
+  $ 92 "MoveL"
+  $ 93 "Direction: Base Z-"
+  global move_thread_flag_93=0
+  thread move_thread_93():
+    enter_critical
+    move_thread_flag_93 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,0.0,-1.0], 0.01)
+    movel(towardsPos, a=1.2, v=0.25)
+    move_thread_flag_93 = 2
+    exit_critical
+  end
+  move_thread_flag_93 = 0
+  move_thread_han_93 = run move_thread_93()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_93 > 1):
+      join move_thread_han_93
+      $ 94 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 95 "MoveL"
+  $ 96 "Direction: Base Y+"
+  global move_thread_flag_96=0
+  thread move_thread_96():
+    enter_critical
+    move_thread_flag_96 = 1
+    local towardsPos=calculate_point_to_move_towards(p[0.0,0.0,0.0,0.0,0.0,0.0], [0.0,1.0,0.0], 0.315)
+    movel(towardsPos, a=1.2, v=0.25)
+    move_thread_flag_96 = 2
+    exit_critical
+  end
+  move_thread_flag_96 = 0
+  move_thread_han_96 = run move_thread_96()
+  while (True):
+    sleep(1.0E-10)
+    if (move_thread_flag_96 > 1):
+      join move_thread_han_96
+      $ 97 "Until (distance)"
+      break
+    end
+    sync()
+  end
+  $ 98 "Halt"
+  halt
+  $ 99 "timer_2: Stop"
+  timer_2_is_counting = False
+end

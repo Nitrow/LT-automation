@@ -1,0 +1,100 @@
+ Program
+   Robot Program
+     ResetForce
+       Wait is_steady()
+       Wait: 0.25
+       zero_ftsensor()
+       Wait: 0.25
+     timer_1: Start
+     MoveJ
+       StartPose
+     Cage1
+       MoveL
+         StartCage1
+       MoveL
+         Pregrasp1
+       Force
+         Set DO[0]=On
+         Wait: 0.5
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Set DO[0]=Off
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       MoveL
+         Waypoint_1
+       MoveL
+         Waypoint_2
+       Wait: 2.0
+       MoveL
+         Pregrasp1
+       MoveL
+         Direction: Base Z+
+           Until (distance)
+       MoveL
+         Pregrasp21
+       MoveL
+         Pregrasp22
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Force
+         Set DO[0]=On
+         Wait: 0.7
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Set DO[0]=Off
+       MoveL
+         Direction: Base Z-
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Halt
+       MoveL
+         Waypoint_3
+       Halt
+       MoveL
+         Waypoint_4
+       Wait: 2.0
+     Cage2
+       MoveL
+         Waypoint_5
+       MoveL
+         Waypoint_6
+       Force
+         Set DO[0]=On
+         Wait: 0.5
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Set DO[0]=Off
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Halt
+       MoveL
+         Waypoint_5
+       MoveL
+         Waypoint_7
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Force
+         Set DO[0]=On
+         Wait: 0.7
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Set DO[0]=Off
+       MoveL
+         Direction: Base Z-
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Halt
+     timer_2: Stop
