@@ -1,6 +1,6 @@
  Program
    Robot Program
-     ResetForce
+     resetForce
        Wait is_steady()
        Wait: 0.25
        zero_ftsensor()
@@ -8,11 +8,11 @@
      timer_1: Start
      MoveJ
        StartPose
-     Cage1
+     cage1
        MoveL
-         StartCage1
+         startCage1
        MoveL
-         Waypoint_2
+         preGraspCage11
        MoveL
          Direction: Base Y-
            Until (tool_contact_detection)
@@ -20,7 +20,7 @@
          Direction: Base Z+
            Until (distance)
        MoveL
-         Waypoint_3
+         alignCage11
        Set DO[0]=On
        Wait: 0.7
        var_1≔get_actual_tcp_pose()
@@ -48,9 +48,9 @@
            Until (distance)
        Halt
        MoveL
-         StartCage1
+         startCage1
        MoveL
-         Waypoint_6
+         preGraspCage12
        MoveL
          Direction: Base Y-
            Until (tool_contact_detection)
@@ -67,7 +67,7 @@
          Direction: Base X+
            Until (distance)
        MoveL
-         Waypoint_1
+         alignCage12
        Set DO[0]=On
        Wait: 0.7
        var_1≔get_actual_tcp_pose()
@@ -97,11 +97,12 @@
        Wait: 2.0
      MoveJ
        StartPose
-     timer_1: Start
      Halt
-     Cage2
+     cage2
        MoveL
-         Waypoint_9
+         startCage21
+       MoveL
+         preGraspCage21
        MoveL
          Direction: Base Y-
            Until (tool_contact_detection)
@@ -109,7 +110,7 @@
          Direction: Base Z+
            Until (distance)
        MoveL
-         Waypoint_8
+         alignCage21
        Set DO[0]=On
        Wait: 0.7
        var_1≔get_actual_tcp_pose()
@@ -137,9 +138,9 @@
            Until (distance)
        Halt
        MoveL
-         Waypoint_7
+         startCage22
        MoveL
-         Waypoint_11
+         preGraspCage22
        MoveL
          Direction: Base Y-
            Until (tool_contact_detection)
@@ -156,19 +157,18 @@
          Direction: Base X+
            Until (distance)
        MoveL
-         Waypoint_5
+         alignCage22
        var_1≔get_actual_tcp_pose()
        Force
          Loop var_1[2] < 0.2685
            var_1≔get_actual_tcp_pose()
-       Wait: 0.5
+       Wait: 0.7
        MoveL
          Direction: Base Y+
            Until (distance)
        MoveL
          Direction: Base Z-
            Until (distance)
-       Wait: 0.5
        MoveL
          Direction: Base Y+
            Until (distance)
@@ -180,14 +180,16 @@
            Until (distance)
        Halt
      timer_1: Stop
-     SmallCage
+     sCage
        MoveL
-         Waypoint_13
+         startSCage
+       MoveL
+         preGraspSCage
        MoveL
          Direction: Base Y-
            Until (tool_contact_detection)
        MoveL
-         Waypoint_12
+         alignSCage
        Set DO[0]=On
        Wait: 0.7
        var_1≔get_actual_tcp_pose()
@@ -215,6 +217,6 @@
            Until (distance)
      avoidStack
        MoveJ
-         Waypoint_10
-         Waypoint_15
-         Waypoint_16
+         avoid1
+         avoid2
+         avoid3
