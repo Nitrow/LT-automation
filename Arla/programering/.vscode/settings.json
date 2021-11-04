@@ -64,5 +64,7 @@
         "random": "cpp",
         "cinttypes": "cpp"
     },
-    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": false
 }

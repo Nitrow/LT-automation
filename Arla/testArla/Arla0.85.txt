@@ -1,0 +1,223 @@
+ Program
+   Robot Program
+     resetForce
+       Wait is_steady()
+       Wait: 0.25
+       zero_ftsensor()
+       Wait: 0.25
+     timer_1: Start
+     MoveJ
+       StartPose
+     cage1
+       MoveL
+         startCage1
+       MoveL
+         preGraspCage11
+       MoveL
+         Direction: Base Y-
+           Until (tool_contact_detection)
+       MoveL
+         Direction: Base Z+
+           Until (distance)
+       MoveL
+         alignCage11
+       Set DO[0]=On
+       Wait: 0.8
+       var_1≔get_actual_tcp_pose()
+       Force
+         Loop var_1[2] < 0.268
+           var_1≔get_actual_tcp_pose()
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Set DO[0]=Off
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       MoveL
+         Direction: Base Z-
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       MoveL
+         Direction: Base Z-
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Halt
+       MoveL
+         startCage1
+       MoveL
+         preGraspCage12
+       MoveL
+         Direction: Base Y-
+           Until (tool_contact_detection)
+       MoveL
+         Direction: Base X+
+           Until (distance)
+       MoveL
+         Direction: Base X-
+           Until (distance)
+       MoveL
+         Direction: Base X+
+           Until (distance)
+       MoveL
+         Direction: Base Z+
+           Until (distance)
+       MoveL
+         alignCage12
+       var_1≔get_actual_tcp_pose()
+       Force
+         Loop var_1[2] < 0.2685
+           var_1≔get_actual_tcp_pose()
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       MoveL
+         Direction: Base Z-
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       MoveL
+         Direction: Base Z-
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Halt
+       Wait: 2.0
+     MoveJ
+       StartPose
+     Halt
+     timer_1: Start
+     cage2
+       MoveL
+         startCage21
+       MoveL
+         preGraspCage21
+       MoveL
+         Direction: Base Y-
+           Until (tool_contact_detection)
+       MoveL
+         Direction: Base Z+
+           Until (distance)
+       MoveL
+         alignCage21
+       Set DO[0]=On
+       Wait: 0.5
+       var_1≔get_actual_tcp_pose()
+       Force
+         Loop var_1[2] < 0.2685
+           var_1≔get_actual_tcp_pose()
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Set DO[0]=Off
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       MoveL
+         Direction: Base Z-
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       MoveL
+         Direction: Base Z-
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Halt
+       MoveL
+         startCage22
+       MoveL
+         preGraspCage22
+       MoveL
+         Direction: Base Y-
+           Until (tool_contact_detection)
+       MoveL
+         Direction: Base X+
+           Until (distance)
+       MoveL
+         Direction: Base X-
+           Until (distance)
+       MoveL
+         Direction: Base X+
+           Until (distance)
+       MoveL
+         Direction: Base Z+
+           Until (distance)
+       MoveL
+         alignCage22
+       Set DO[0]=On
+       var_1≔get_actual_tcp_pose()
+       Force
+         Loop var_1[2] < 0.268
+           var_1≔get_actual_tcp_pose()
+       Set DO[0]=Off
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       MoveL
+         Direction: Base Z-
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       MoveL
+         Direction: Base Z-
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Halt
+     timer_1: Stop
+     sCage
+       MoveL
+         startSCage
+       MoveL
+         preGraspSCage
+       MoveL
+         Direction: Base Y-
+           Until (tool_contact_detection)
+       MoveL
+         alignSCage
+       Set DO[0]=On
+       Wait: 0.5
+       var_1≔get_actual_tcp_pose()
+       Force
+         Loop var_1[2] < 0.2685
+           var_1≔get_actual_tcp_pose()
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Set DO[0]=Off
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       MoveL
+         Direction: Base Z-
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       MoveL
+         Direction: Base Z-
+           Until (distance)
+       MoveL
+         Direction: Base Y+
+           Until (distance)
+       Halt
+     avoidStack
+       MoveJ
+         avoid1
+         avoid2
+         avoid4
+         avoid3
