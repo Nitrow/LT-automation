@@ -4,9 +4,7 @@ import numpy as np
 import cv2
 import sys
 from pyzbar import pyzbar
-from pyzbar.pyzbar import ZBarSymbol
 import csv
-import sys
 import time
 
 # ---------------------------------------------------------------------------------------------------------------------------------------
@@ -168,7 +166,7 @@ else:
     print("Press q to leave the programm")
 
 
-def read_barcodes(frame):
+def readBarcode(frame):
     barcodes = pyzbar.decode(frame)
     for barcode in barcodes:
         x, y, w, h = barcode.rect
@@ -186,8 +184,8 @@ def read_barcodes(frame):
     return frame
 
 
-def FindCapColor(Image):
-    print("Detecting cap color")
+def findCapColor(Image):
+    #print("Detecting cap color")
 
     file = open("recognized.txt", "a")
 
@@ -200,7 +198,7 @@ def FindCapColor(Image):
     Green = average_color[1]
     Blue = average_color[2]
 
-    print(Red, Green, Blue)
+    #print(Red, Green, Blue)
 
     color = ""
     with open('color.csv', 'r+') as fd:
@@ -225,7 +223,7 @@ def FindCapColor(Image):
                     break
                 break
 
-    print(difference)
+    #print(difference)
 
     file.write("Color of cap: ")
     file.write(colorName)
@@ -246,8 +244,14 @@ time.sleep(0.5)
 while(True):
 
     # Capture a single frame and freeze the video
+
+    time1 = time.time()
     ueye.is_SetExternalTrigger(hCam, ueye.IS_SET_TRIGGER_SOFTWARE)
     ueye.is_FreezeVideo(hCam, ueye.IS_WAIT)
+
+    time2 = time.time()
+
+    print(((time2-time1)-0.161)*1000)
 
     # Get inage info and process frame for openCV
     array = ueye.get_data(pcImageMemory, rectAOI.s32Width,
@@ -256,21 +260,11 @@ while(True):
     frame = cv2.resize(frame, (0, 0), fx=1, fy=1)
 
     # Detect barcode of image
-    barcodes = pyzbar.decode(frame)
-
-    for barcode in barcodes:
-        (x, y, w, h) = barcode.rect
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-        barcodeData = barcode.data.decode("utf-8")
-        barcodeType = barcode.type
-        text = "{} ({})".format(barcodeData, barcodeType)
-        cv2.putText(frame, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5, (0, 0, 255), 2)
-        print("[INFO] Found {} barcode: {}".format(barcodeType, barcodeData))
+    readBarcode(frame)
 
     # Find cap color of sample in image
 
-    FindCapColor(frame)
+    findCapColor(frame)
 
     # Show image in openCV
 
@@ -279,6 +273,8 @@ while(True):
     # Press q if you want to exit loop
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+
+    time.sleep(1)
 # ---------------------------------------------------------------------------------------------------------------------------------------
 
 # Releases an image memory that was allocated using is_AllocImageMem() and removes it from the driver management
