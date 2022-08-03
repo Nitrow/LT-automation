@@ -239,46 +239,49 @@ def FindCapColor(Image):
 
 
 #---------------------------------------------------------------------------------------------------------------------------------------
+
+
 bardet = cv2.barcode_BarcodeDetector()
-# Continuous image display
-time.sleep(1)
+
+
+time.sleep(0.5)
+
+
 
 while(True):
-    
+
+    #Capture a single frame and freeze the video
+
+    ueye.is_SetExternalTrigger(hCam, ueye.IS_SET_TRIGGER_SOFTWARE)
+    ueye.is_FreezeVideo(hCam, ueye.IS_WAIT)
+
+    #Get inage info and process frame for openCV
     array = ueye.get_data(pcImageMemory, rectAOI.s32Width, rectAOI.s32Height, nBitsPerPixel, pitch, copy=False)
-
-    # ...reshape it in an numpy array...
     frame = np.reshape(array,(600, 1008, bytes_per_pixel))
-
-    # ...resize the image
     frame = cv2.resize(frame,(0,0),fx=1, fy=1)
     
-#---------------------------------------------------------------------------------------------------------------------------------------
+    #Detect barcode of image
     barcodes = pyzbar.decode(frame)
 
     for barcode in barcodes:
-	# extract the bounding box location of the barcode and draw the
-	# bounding box surrounding the barcode on the image
 	    (x, y, w, h) = barcode.rect
 	    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-	# the barcode data is a bytes object so if we want to draw it on
-	# our output image we need to convert it to a string first
 	    barcodeData = barcode.data.decode("utf-8")
 	    barcodeType = barcode.type
-	# draw the barcode data and barcode type on the image
 	    text = "{} ({})".format(barcodeData, barcodeType)
 	    cv2.putText(frame, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX,
 		0.5, (0, 0, 255), 2)
-	# print the barcode type and data to the terminal
 	    print("[INFO] Found {} barcode: {}".format(barcodeType, barcodeData))
 
+    #FInd cap color of sample in image
+
     FindCapColor(frame)
-#---------------------------------------------------------------------------------------------------------------------------------------
 
-    #...and finally display it
-    cv2.imshow("SimpleLive_Python_uEye_OpenCV", frame)
+    #Show image in openCV
 
-    # Press q if you want to end the loop
+    cv2.imshow("Sample Image", frame)
+
+    # Press q if you want to exit loop
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 #---------------------------------------------------------------------------------------------------------------------------------------
