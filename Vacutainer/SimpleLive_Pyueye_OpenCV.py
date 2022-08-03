@@ -1,4 +1,4 @@
-#Libraries
+# Libraries
 from pyueye import ueye
 import numpy as np
 import cv2
@@ -9,21 +9,23 @@ import csv
 import sys
 import time
 
-#---------------------------------------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------------------------------------
 
-#Variables
-hCam = ueye.HIDS(0)             #0: first available camera;  1-254: The camera with the specified camera ID
+# Variables
+# 0: first available camera;  1-254: The camera with the specified camera ID
+hCam = ueye.HIDS(0)
 sInfo = ueye.SENSORINFO()
 cInfo = ueye.CAMINFO()
 pcImageMemory = ueye.c_mem_p()
 MemID = ueye.int()
 rectAOI = ueye.IS_RECT()
 pitch = ueye.INT()
-nBitsPerPixel = ueye.INT(24)    #24: bits per pixel for color mode; take 8 bits per pixel for monochrome
-channels = 3                    #3: channels for color mode(RGB); take 1 channel for monochrome
+# 24: bits per pixel for color mode; take 8 bits per pixel for monochrome
+nBitsPerPixel = ueye.INT(24)
+channels = 3  # 3: channels for color mode(RGB); take 1 channel for monochrome
 m_nColorMode = ueye.INT(1)		# Y8/RGB16/RGB24/REG32
 bytes_per_pixel = int(nBitsPerPixel / 8)
-#---------------------------------------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------------------------------------
 print("START")
 print()
 
@@ -44,13 +46,12 @@ nRet = ueye.is_GetSensorInfo(hCam, sInfo)
 if nRet != ueye.IS_SUCCESS:
     print("is_GetSensorInfo ERROR")
 
-nRet = ueye.is_ResetToDefault( hCam)
+nRet = ueye.is_ResetToDefault(hCam)
 if nRet != ueye.IS_SUCCESS:
     print("is_ResetToDefault ERROR")
 
 # Set display mode to DIB
 nRet = ueye.is_SetDisplayMode(hCam, ueye.IS_SET_DM_DIB)
-
 
 
 # Set the right color mode
@@ -95,10 +96,8 @@ else:
 
 nSupportedFeatures = ueye.INT()
 nRet = ueye.is_DeviceFeature(hCam, ueye.IS_DEVICE_FEATURE_CMD_GET_SUPPORTED_FEATURES,
-                          nSupportedFeatures, ueye.sizeof(nSupportedFeatures))
+                             nSupportedFeatures, ueye.sizeof(nSupportedFeatures))
 
-
-        
 
 #######################################################VERTICAL MERGE MODE CODE###############################################################
 
@@ -107,10 +106,10 @@ nRet = ueye.is_DeviceFeature(hCam, ueye.IS_DEVICE_FEATURE_CMD_GET_SUPPORTED_FEAT
 
 
 #nVerticalAoiMergeMode = ueye.INT(ueye.IS_VERTICAL_AOI_MERGE_MODE_FREERUN)
-#nRet = ueye.is_DeviceFeature(hCam, ueye.IS_DEVICE_FEATURE_CMD_SET_VERTICAL_AOI_MERGE_MODE,
- #                    nVerticalAoiMergeMode, ueye.sizeof(nVerticalAoiMergeMode))
+# nRet = ueye.is_DeviceFeature(hCam, ueye.IS_DEVICE_FEATURE_CMD_SET_VERTICAL_AOI_MERGE_MODE,
+#                    nVerticalAoiMergeMode, ueye.sizeof(nVerticalAoiMergeMode))
 
-#if (nRet == ueye.IS_SUCCESS):
+# if (nRet == ueye.IS_SUCCESS):
 
 pInfo = ueye.SENSORINFO()
 nRet = ueye.is_GetSensorInfo(hCam, pInfo)
@@ -119,15 +118,14 @@ nRet = ueye.is_GetSensorInfo(hCam, pInfo)
 maxWidth = ueye.INT(pInfo.nMaxWidth)
 maxHeight = ueye.INT(pInfo.nMaxHeight)
 
-   
- 
+
 rectAOI = ueye.IS_RECT()
 rectAOI.s32X = 0
 rectAOI.s32Y = 0
-rectAOI.s32Width = 1008;
-rectAOI.s32Height = 600;
+rectAOI.s32Width = 1008
+rectAOI.s32Height = 600
 #    nRet = ueye.is_AOI(hCam, ueye.IS_AOI_IMAGE_SET_AOI, rectAOI, ueye.sizeof(rectAOI))
- 
+
 #    nVerticalAoiMergePosition = ueye.INT(600)
 #    nRet = ueye.is_DeviceFeature(hCam, ueye.IS_DEVICE_FEATURE_CMD_SET_VERTICAL_AOI_MERGE_POSITION,
 #                        nVerticalAoiMergePosition, ueye.sizeof(nVerticalAoiMergePosition))
@@ -141,9 +139,9 @@ pParam.value = "testNew.ini"
 ueye.is_ParameterSet(hCam, ueye.IS_PARAMETERSET_CMD_LOAD_FILE, pParam, 0)
 
 
-
 # Allocates an image memory for an image having its dimensions defined by width and height and its color depth defined by nBitsPerPixel
-nRet = ueye.is_AllocImageMem(hCam, rectAOI.s32Width, rectAOI.s32Height, nBitsPerPixel, pcImageMemory, MemID)
+nRet = ueye.is_AllocImageMem(
+    hCam, rectAOI.s32Width, rectAOI.s32Height, nBitsPerPixel, pcImageMemory, MemID)
 if nRet != ueye.IS_SUCCESS:
     print("is_AllocImageMem ERROR")
 else:
@@ -156,14 +154,14 @@ else:
         nRet = ueye.is_SetColorMode(hCam, m_nColorMode)
 
 
-
 # Activates the camera's live video mode (free run mode)
 nRet = ueye.is_CaptureVideo(hCam, ueye.IS_DONT_WAIT)
 if nRet != ueye.IS_SUCCESS:
     print("is_CaptureVideo ERROR")
 
 # Enables the queue mode for existing image memory sequences
-nRet = ueye.is_InquireImageMem(hCam, pcImageMemory, MemID, rectAOI.s32Width, rectAOI.s32Height, nBitsPerPixel, pitch)
+nRet = ueye.is_InquireImageMem(
+    hCam, pcImageMemory, MemID, rectAOI.s32Width, rectAOI.s32Height, nBitsPerPixel, pitch)
 if nRet != ueye.IS_SUCCESS:
     print("is_InquireImageMem ERROR")
 else:
@@ -173,72 +171,70 @@ else:
 def read_barcodes(frame):
     barcodes = pyzbar.decode(frame)
     for barcode in barcodes:
-        x, y , w, h = barcode.rect
-        #1
+        x, y, w, h = barcode.rect
+        # 1
         barcode_info = barcode.data.decode('utf-8')
-        cv2.rectangle(frame, (x, y),(x+w, y+h), (0, 255, 0), 2)
-        
-        #2
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+
+        # 2
         font = cv2.FONT_HERSHEY_DUPLEX
-        cv2.putText(frame, barcode_info, (x + 6, y - 6), font, 2.0, (255, 255, 255), 1)
-        #3
-        with open("recognized.txt", mode ='a') as file:
+        cv2.putText(frame, barcode_info, (x + 6, y - 6),
+                    font, 2.0, (255, 255, 255), 1)
+        # 3
+        with open("recognized.txt", mode='a') as file:
             file.write("Recognized Barcode:" + barcode_info)
     return frame
 
 
 def FindCapColor(Image):
-        print("Detecting cap color")
+    print("Detecting cap color")
 
+    file = open("recognized.txt", "a")
 
-        file = open("recognized.txt", "a")
+    CapRectangle = Image[0:599, 0:50]
 
-        CapRectangle = Image[0:599,0:50]
+    average_color_row = np.average(CapRectangle, axis=0)
+    average_color = np.average(average_color_row, axis=0)
 
+    Red = average_color[0]
+    Green = average_color[1]
+    Blue = average_color[2]
 
-        average_color_row = np.average(CapRectangle, axis=0)
-        average_color = np.average(average_color_row, axis=0)
+    print(Red, Green, Blue)
 
-        Red = average_color[0]
-        Green = average_color[1]
-        Blue = average_color[2]
+    color = ""
+    with open('color.csv', 'r+') as fd:
+        reader = csv.reader(fd)
+        for row in reader:
+            difference = (abs(int(row[1])-int(Red)) + abs(
+                int(row[2])-int(Green)) + abs(int(row[3])-int(Blue)))
+            if difference < 30:
+                color = row[0]
+                colorName = color
+                break
 
-        print(Red, Green, Blue)
-
-        color = ""
-        with open('color.csv', 'r+') as fd:
-            reader = csv.reader(fd)
-            for row in reader:
-                difference = (abs(int(row[1])-int(Red)) + abs(
-                    int(row[2])-int(Green)) + abs(int(row[3])-int(Blue)))
-                if difference < 30:
-                    color = row[0]
-                    colorName = color
+        if not color:
+            print("No accurate match, type new name for this color")
+            for line in sys.stdin:
+                for var in line.split():
+                    line = line.replace("\n", "")
+                    line = line.replace(",", " ")
+                    line = line.replace("\"", "")
+                    fd.write(f"{line},{int(Red)},{int(Green)},{int(Blue)}\n")
+                    colorName = str(line)
                     break
+                break
 
-            if not color:
-                print("No accurate match, type new name for this color")
-                for line in sys.stdin:
-                    for var in line.split():
-                        line = line.replace("\n", "")
-                        line = line.replace(",", " ")
-                        line = line.replace("\"", "")
-                        fd.write(f"{line},{int(Red)},{int(Green)},{int(Blue)}\n")
-                        colorName = str(line)
-                        break
-                    break
-        
-        print(difference)
+    print(difference)
 
-        file.write("Color of cap: ")
-        file.write(colorName)
-        file.write("\n")
+    file.write("Color of cap: ")
+    file.write(colorName)
+    file.write("\n")
+
+    file.close
 
 
-        file.close
-
-
-#---------------------------------------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------------------------------------
 
 
 bardet = cv2.barcode_BarcodeDetector()
@@ -247,44 +243,43 @@ bardet = cv2.barcode_BarcodeDetector()
 time.sleep(0.5)
 
 
-
 while(True):
 
-    #Capture a single frame and freeze the video
-
+    # Capture a single frame and freeze the video
     ueye.is_SetExternalTrigger(hCam, ueye.IS_SET_TRIGGER_SOFTWARE)
     ueye.is_FreezeVideo(hCam, ueye.IS_WAIT)
 
-    #Get inage info and process frame for openCV
-    array = ueye.get_data(pcImageMemory, rectAOI.s32Width, rectAOI.s32Height, nBitsPerPixel, pitch, copy=False)
-    frame = np.reshape(array,(600, 1008, bytes_per_pixel))
-    frame = cv2.resize(frame,(0,0),fx=1, fy=1)
-    
-    #Detect barcode of image
+    # Get inage info and process frame for openCV
+    array = ueye.get_data(pcImageMemory, rectAOI.s32Width,
+                          rectAOI.s32Height, nBitsPerPixel, pitch, copy=False)
+    frame = np.reshape(array, (600, 1008, bytes_per_pixel))
+    frame = cv2.resize(frame, (0, 0), fx=1, fy=1)
+
+    # Detect barcode of image
     barcodes = pyzbar.decode(frame)
 
     for barcode in barcodes:
-	    (x, y, w, h) = barcode.rect
-	    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-	    barcodeData = barcode.data.decode("utf-8")
-	    barcodeType = barcode.type
-	    text = "{} ({})".format(barcodeData, barcodeType)
-	    cv2.putText(frame, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX,
-		0.5, (0, 0, 255), 2)
-	    print("[INFO] Found {} barcode: {}".format(barcodeType, barcodeData))
+        (x, y, w, h) = barcode.rect
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+        barcodeData = barcode.data.decode("utf-8")
+        barcodeType = barcode.type
+        text = "{} ({})".format(barcodeData, barcodeType)
+        cv2.putText(frame, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (0, 0, 255), 2)
+        print("[INFO] Found {} barcode: {}".format(barcodeType, barcodeData))
 
-    #FInd cap color of sample in image
+    # Find cap color of sample in image
 
     FindCapColor(frame)
 
-    #Show image in openCV
+    # Show image in openCV
 
     cv2.imshow("Sample Image", frame)
 
     # Press q if you want to exit loop
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-#---------------------------------------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------------------------------------
 
 # Releases an image memory that was allocated using is_AllocImageMem() and removes it from the driver management
 ueye.is_FreeImageMem(hCam, pcImageMemory, MemID)
