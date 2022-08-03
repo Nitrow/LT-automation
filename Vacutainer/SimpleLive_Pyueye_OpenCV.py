@@ -234,7 +234,7 @@ def findCapColor(Image):
 
 # ---------------------------------------------------------------------------------------------------------------------------------------
 
-
+ueye.is_SetExternalTrigger(hCam, ueye.IS_SET_TRIGGER_SOFTWARE)
 bardet = cv2.barcode_BarcodeDetector()
 
 
@@ -246,7 +246,6 @@ while(True):
     # Capture a single frame and freeze the video
 
     time1 = time.time()
-    ueye.is_SetExternalTrigger(hCam, ueye.IS_SET_TRIGGER_SOFTWARE)
     ueye.is_FreezeVideo(hCam, ueye.IS_WAIT)
 
     time2 = time.time()
