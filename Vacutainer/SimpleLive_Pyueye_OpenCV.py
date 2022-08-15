@@ -6,6 +6,8 @@ import sys
 from pyzbar import pyzbar
 import csv
 import time
+import ctypes
+import snap7
 
 # ---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -26,6 +28,7 @@ bytes_per_pixel = int(nBitsPerPixel / 8)
 # ---------------------------------------------------------------------------------------------------------------------------------------
 print("START")
 print()
+
 
 
 # Starts the driver and establishes the connection to the camera
